@@ -20,7 +20,7 @@ bot.command('start', (ctx)=>{
   const messageId = ctx.message.message_id;
   console.log(messageId)
   saveUser(ctx.from);
-  ctx.replyWithMarkdownV2(`${ctx.from.first_name} welcome to our bot 😊🥰\nyou can send me a date in this format YYYY-MM-DD and i will send you all the pictures which was taken by Curiosity rover on that specific date 😁😁`,
+  ctx.reply(`${ctx.from.first_name} welcome to our bot 😊🥰\nyou can send me a date in this format YYYY-MM-DD and i will send you all the pictures which was taken by Curiosity rover on that specific date 😁😁`,
     {
       reply_to_message_id: messageId,
     }
@@ -33,8 +33,9 @@ bot.command('start', (ctx)=>{
 bot.on('text', async (ctx) => {
   const messageId = ctx.message.message_id;
   const date = ctx.message.text;
+  console.log(ctx.from.first_name + " "+ ctx.message.text)
   if(!regex.test(date)){
-    ctx.reply('Please enter a valid date in the format YYYY-MM-DD. 🥴🥴',{
+    ctx.reply('Please enter a valid date in the format YYYY-MM-DD 🥴🥴',{
       reply_to_message_id: messageId,
     });
     return;
@@ -60,12 +61,13 @@ bot.on('text', async (ctx) => {
       });
 
   } else {
-    ctx.replyWithMarkdownV2("No photo was taken on the this date. 🥺🥺",{
+    ctx.replyWithMarkdownV2("No photo was taken on the this date 🥺🥺",{
       reply_to_message_id: messageId,
 
     });
   }
 });
+
 
 bot.on('callback_query', async (ctx) => {
   ctx.answerCbQuery();
@@ -90,10 +92,9 @@ bot.on('callback_query', async (ctx) => {
         }
       });
   } else {
-    ctx.replyWithMarkdownV2("No more photos on this day!\nTry another date. 😁😁");
+    ctx.reply("No more photos on this day!\nTry another date. 😁😁");
   }
 })
-
 
 
 
